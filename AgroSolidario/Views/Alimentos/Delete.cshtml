@@ -1,0 +1,60 @@
+﻿@model AgroSolidario.Models.Alimento
+
+@{
+    ViewData["Title"] = "Excluir Alimento";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white fw-bold">
+                <i class="bi bi-trash"></i> Excluir Alimento
+            </div>
+            <div class="card-body">
+
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+                </div>
+
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">
+                        <i class="bi bi-box-seam me-2 text-danger"></i>
+                        <strong>Nome:</strong> @Model.Nome
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-hash me-2 text-danger"></i>
+                        <strong>Quantidade:</strong> @Model.Quantidade
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-person me-2 text-danger"></i>
+                        <strong>Doador:</strong> @Model.Doador
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-geo-alt me-2 text-danger"></i>
+                        <strong>Destino:</strong> @Model.Destino
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-calendar me-2 text-danger"></i>
+                        <strong>Validade:</strong> @Model.Validade.ToShortDateString()
+                    </li>
+                </ul>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Confirmar Exclusão
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@model AgroSolidario.Models.Usuario
+
+@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow">
+            <div class="card-header bg-success text-white fw-bold">
+                <i class="bi bi-person-circle"></i> Meu Perfil
+            </div>
+            <div class="card-body">
+
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-circle text-success" style="font-size:5rem;"></i>
+                    <h4 class="fw-bold mt-2">@Model.Nome</h4>
+                    <span class="badge fs-6 bg-@(Model.Tipo == "ADMIN" ? "danger" : Model.Tipo == "Doador" ? "success" : "primary")">
+                        @Model.Tipo
+                    </span>
+                </div>
+
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">
+                        <i class="bi bi-person me-2 text-success"></i>
+                        <strong>Nome:</strong> @Model.Nome
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-envelope me-2 text-success"></i>
+                        <strong>Email:</strong> @Model.Email
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-shield me-2 text-success"></i>
+                        <strong>Tipo:</strong> @Model.Tipo
+                    </li>
+
+                    @if (Model.Tipo == "Beneficiario")
+                    {
+                        @if (Model.TipoInstituicao != null)
+                        {
+                            <li class="list-group-item">
+                                <i class="bi bi-building me-2 text-success"></i>
+                                <strong>Instituição:</strong> @Model.TipoInstituicao
+                            </li>
+                        }
+                        @if (Model.Endereco != null)
+                        {
+                            <li class="list-group-item">
+                                <i class="bi bi-geo-alt me-2 text-success"></i>
+                                <strong>Endereço:</strong> @Model.Endereco
+                            </li>
+                        }
+                        @if (Model.Telefone != null)
+                        {
+                            <li class="list-group-item">
+                                <i class="bi bi-telephone me-2 text-success"></i>
+                                <strong>Telefone:</strong> @Model.Telefone
+                            </li>
+                        }
+                    }
+                </ul>
+
+                <div class="d-flex gap-2">
+                    @if (Model.Tipo != "ADMIN")
+                    {
+                        <a asp-controller="Usuarios" asp-action="Edit" asp-route-id="@Model.Id"
+                           class="btn btn-warning">
+                            <i class="bi bi-pencil"></i> Editar Perfil
+                        </a>
+                    }
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Voltar
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

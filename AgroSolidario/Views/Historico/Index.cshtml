@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AgroSolidario.Models.Historico>
+
+@{
+    ViewData["Title"] = "Histórico de Doações";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">📋 Histórico de Doações</h2>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        Nenhuma doação registrada ainda.
+    </div>
+}
+else
+{
+    <div class="card shadow">
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th>Alimento</th>
+                        <th>Quantidade</th>
+                        <th>Doador</th>
+                        <th>Destino</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NomeAlimento</td>
+                            <td>@item.Quantidade</td>
+                            <td>@item.Doador</td>
+                            <td>@item.Destino</td>
+                            <td>@item.DataDoacao.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

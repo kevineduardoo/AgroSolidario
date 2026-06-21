@@ -1,0 +1,97 @@
+﻿@model IEnumerable<AgroSolidario.Models.Alimento>
+
+@{
+    ViewData["Title"] = "Alimentos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">📦 Lista de Alimentos</h2>
+    <a asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Novo Alimento
+    </a>
+</div>
+
+<form asp-action="Index" method="get">
+    <div class="input-group mb-4 shadow-sm" style="max-width: 450px;">
+        <span class="input-group-text bg-white">
+            <i class="bi bi-search"></i>
+        </span>
+        <input type="text" name="busca" value="@ViewBag.Busca"
+               class="form-control" placeholder="Pesquisar alimento..." />
+        <button type="submit" class="btn btn-success">Buscar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpar</a>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        Nenhum alimento encontrado.
+    </div>
+}
+else
+{
+    <div class="card shadow">
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Doador</th>
+                        <th>Destino</th>
+                        <th>Validade</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.Foto != null)
+                                {
+                                    <img src="@item.Foto" style="width:60px; height:60px; object-fit:cover; border-radius:8px;" />
+                                }
+                                else
+                                {
+                                    <div style="width:60px; height:60px; background:#e9ecef; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                                        <i class="bi bi-image text-muted"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td>@item.Nome</td>
+                            <td>@item.Quantidade</td>
+                            <td>@item.Doador</td>
+                            <td>@item.Destino</td>
+                            <td class="@(item.Validade <= DateTime.Now.AddDays(30) ? "text-danger fw-bold" : "")">
+                                @item.Validade.ToShortDateString()
+                            </td>
+                            <td>
+                                <span class="badge bg-@(item.Status == "Entregue" ? "success" : "warning text-dark")">
+                                    @item.Status
+                                </span>
+                            </td>
+                            <td>
+                                <a asp-action="AlterarStatus" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-@(item.Status == "Entregue" ? "secondary" : "success")">
+                                    <i class="bi bi-@(item.Status == "Entregue" ? "arrow-counterclockwise" : "check-circle")"></i>
+                                    @(item.Status == "Entregue" ? "Pendente" : "Entregar")
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
